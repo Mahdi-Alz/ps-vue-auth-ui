@@ -1,4 +1,5 @@
 import "@fontsource/poppins";
+import "@fontsource/roboto";
 import "./assets/main.css";
 
 import { createApp } from "vue";
