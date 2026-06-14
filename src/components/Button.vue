@@ -30,11 +30,11 @@ const buttonClass = computed(() => {
   >
     <div v-if="variant === 'google'" class="flex items-center gap-2">
       <img :src="googleLogo" alt="Google" class="w-5 h-5" />
-      <span>Sign in with Google</span>
+      <slot />
     </div>
 
     <div v-else>
-      <span>{{ variant === "signout" ? "Sign out" : "Sign in" }}</span>
+      <slot />
     </div>
   </button>
 </template>

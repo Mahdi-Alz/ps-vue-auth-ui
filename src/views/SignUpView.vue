@@ -25,33 +25,34 @@ import FormInput from "@/components/FormInput.vue";
 
       <!-- form inputs -->
       <div class="flex flex-col gap-3 md:gap-4">
-        <FormInput placeholder="Email or phone number" type="text" />
-        <FormInput placeholder="Enter password" type="password" />
-        <div class="flex gap-2 items-center text-xs">
-          <label class="label justify-start grow gap-2 px-0">
-            <input
-              type="checkbox"
-              class="toggle toggle-sm custom-toggle !w-10 bg-white border-gray-100 checked:border-gray-100 checked:bg-[#808080]"
-            />
-            <span>Remember me</span>
-          </label>
-          <span class="text-[#007AFF]">Forgot password?</span>
-        </div>
+        <FormInput placeholder="Enter your full name" label="name" />
+        <FormInput placeholder="Email address" label="Email" type="email" />
+        <FormInput placeholder="Phone number" label="Phone No." type="tel" />
+        <FormInput
+          placeholder="Enter password"
+          label="Password"
+          type="password"
+        />
+        <FormInput
+          placeholder="Confirm password"
+          label="Confirm Password"
+          type="password"
+        />
       </div>
 
-      <!-- Sign In button -->
-      <Button>Sign in</Button>
+      <!-- Sign Up button -->
+      <Button>Sign Up</Button>
 
       <!-- seprator line -->
       <hr />
 
-      <!-- google button -->
-      <Button variant="google">Sign in with Google</Button>
+      <!-- google sign up button -->
+      <Button variant="google">Sign Up with Google</Button>
 
-      <!-- redirect to sign up -->
+      <!-- redirect to sign in -->
       <p class="text-center font-roboto font-normal text-[12px]">
-        Don't have an account?
-        <span class="text-[#007AFF] ml-2">Sign up now</span>
+        Already have an account?
+        <span class="text-[#007AFF] ml-2">Sign in</span>
       </p>
     </div>
   </div>
