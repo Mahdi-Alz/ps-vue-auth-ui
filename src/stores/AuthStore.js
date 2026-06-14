@@ -50,6 +50,44 @@ export const useAuthStore = defineStore("auth", {
     },
 
     /* --------------------------------- sign in -------------------------------- */
-    signin(userData) {},
+    signin(identifier, password) {
+      // if (!identifier.trim()) {
+      //   return {
+      //     success: false,
+      //     message: "Email or phone is required",
+      //   };
+      // }
+
+      // if (!password.trim()) {
+      //   return {
+      //     success: false,
+      //     message: "Password is required",
+      //   };
+      // }
+
+      const user = this.users.find(
+        (user) =>
+          (user.email === identifier || user.phone === identifier) &&
+          user.password === password,
+      );
+
+      // if (!user) {
+      //   return {
+      //     success: false,
+      //     message: "Invalid credentials",
+      //   };
+      // }
+
+      this.currentUser = user;
+      this.isLoggedIn = true;
+
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
+      localStorage.setItem("isLoggedIn", JSON.stringify(true));
+
+      return {
+        success: true,
+      };
+    },
   },
 });

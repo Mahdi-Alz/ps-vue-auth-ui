@@ -1,7 +1,25 @@
 <script setup>
+import { ref } from "vue";
+import { useAuthStore } from "@/stores/AuthStore";
+import { useRouter } from "vue-router";
+
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
+
+const router = useRouter();
 const authStore = useAuthStore();
+const identifier = ref("");
+const password = ref("");
+
+const handleSignin = () => {
+  const result = authStore.signin(identifier.value, password.value);
+  if (!result.success) {
+    errorMessage.value = result.message;
+    return;
+  }
+  router.push("/dashboard");
+  console.log("success login");
+};
 </script>
 <template>
   <!-- full container -->
@@ -26,8 +44,16 @@ const authStore = useAuthStore();
 
       <!-- form inputs -->
       <div class="flex flex-col gap-3 md:gap-4">
-        <FormInput placeholder="Email or phone number" type="text" />
-        <FormInput placeholder="Enter password" type="password" />
+        <FormInput
+          v-model="identifier"
+          placeholder="Email or phone number"
+          type="text"
+        />
+        <FormInput
+          v-model="password"
+          placeholder="Enter password"
+          type="password"
+        />
         <div class="flex gap-2 items-center text-xs">
           <label class="label justify-start grow gap-2 px-0">
             <input
@@ -41,7 +67,7 @@ const authStore = useAuthStore();
       </div>
 
       <!-- Sign In button -->
-      <Button>Sign in</Button>
+      <Button @click="handleSignin">Sign in</Button>
 
       <!-- seprator line -->
       <hr />

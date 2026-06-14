@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+// define component v-model
+const model = defineModel();
 
 // props
 const props = defineProps({
@@ -26,6 +28,7 @@ const isPasswordShown = ref(false);
     <!-- we first check if it's Password field or not, then if we have to show it or not -->
     <div class="relative">
       <input
+        v-model="model"
         :type="
           props.type === 'password'
             ? isPasswordShown
