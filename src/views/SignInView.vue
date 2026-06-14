@@ -14,7 +14,7 @@ import FormInput from "@/components/FormInput.vue";
     </div>
     <!-- sign in container -->
     <div
-      class="py-4 px-2 rounded-2xl max-w-[456px] min-w-[256px] min-h-screen mx-auto flex flex-col gap-6 md:w-1/2 lg:w-1/3 md:p-12"
+      class="p-4 pt-6 rounded-2xl max-w-[456px] min-w-[256px] min-h-screen mx-auto flex flex-col gap-6 md:w-1/2 lg:w-1/3 md:p-12"
     >
       <!-- title -->
       <h2
@@ -27,13 +27,13 @@ import FormInput from "@/components/FormInput.vue";
       <div class="flex flex-col gap-3 md:gap-4">
         <FormInput placeholder="Email or phone number" type="text" />
         <FormInput placeholder="Enter password" type="password" />
-        <div class="flex justify-between items-center text-[12px]">
-          <label class="label">
+        <div class="flex gap-2 items-center text-xs">
+          <label class="label justify-start grow gap-2 px-0">
             <input
               type="checkbox"
-              class="toggle toggle-sm custom-toggle !w-10 bg-white border-gray-100 checked:border-gray-100 checked:bg-[#808080] mr-2"
+              class="toggle toggle-sm custom-toggle !w-10 bg-white border-gray-100 checked:border-gray-100 checked:bg-[#808080]"
             />
-            Remember me
+            <span>Remember me</span>
           </label>
           <span class="text-[#007AFF]">Forgot password?</span>
         </div>
@@ -50,7 +50,8 @@ import FormInput from "@/components/FormInput.vue";
 
       <!-- redirect to sign up -->
       <p class="text-center font-roboto font-normal text-[12px]">
-        Don't have an account? <span class="text-[#007AFF]">Sign up now</span>
+        Don't have an account?
+        <span class="text-[#007AFF] ml-2">Sign up now</span>
       </p>
     </div>
   </div>
