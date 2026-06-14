@@ -6,19 +6,28 @@ import { useRouter } from "vue-router";
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 
-const router = useRouter();
+// const router = useRouter();
 const authStore = useAuthStore();
 const identifier = ref("");
 const password = ref("");
+const errorMessage = ref("");
 
 const handleSignin = () => {
-  const result = authStore.signin(identifier.value, password.value);
-  if (!result.success) {
-    errorMessage.value = result.message;
+  errorMessage.value = "";
+  // first check if fields are not empty
+  if (!identifier.value.trim() || !password.value.trim()) {
+    errorMessage.value = "All the fields are required";
     return;
   }
-  router.push("/dashboard");
-  console.log("success login");
+  // then we pass them to signin function in Pinia Store and get the result of sign in
+  const resultSignin = authStore.signin(identifier.value, password.value);
+  if (!resultSignin.success) {
+    errorMessage.value = resultSignin.message;
+    return;
+  }
+  //router.push("/dashboard/");
+  // to check the console
+  console.log("success login id:" + resultSignin.id);
 };
 </script>
 <template>
@@ -54,6 +63,9 @@ const handleSignin = () => {
           placeholder="Enter password"
           type="password"
         />
+        <span v-if="errorMessage" class="text-red-500 text-sm text-center">
+          {{ errorMessage }}</span
+        >
         <div class="flex gap-2 items-center text-xs">
           <label class="label justify-start grow gap-2 px-0">
             <input

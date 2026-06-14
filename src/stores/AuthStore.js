@@ -7,7 +7,7 @@ import generateUniqueId from "generate-unique-id";
 // });
 
 const default_user = {
-  id: 1,
+  id: "123",
   name: "Default User",
   email: "default@example.com",
   phone: "0123456789",
@@ -51,32 +51,18 @@ export const useAuthStore = defineStore("auth", {
 
     /* --------------------------------- sign in -------------------------------- */
     signin(identifier, password) {
-      // if (!identifier.trim()) {
-      //   return {
-      //     success: false,
-      //     message: "Email or phone is required",
-      //   };
-      // }
-
-      // if (!password.trim()) {
-      //   return {
-      //     success: false,
-      //     message: "Password is required",
-      //   };
-      // }
-
       const user = this.users.find(
         (user) =>
           (user.email === identifier || user.phone === identifier) &&
           user.password === password,
       );
 
-      // if (!user) {
-      //   return {
-      //     success: false,
-      //     message: "Invalid credentials",
-      //   };
-      // }
+      if (!user) {
+        return {
+          success: false,
+          message: "Username or Password is incorrect",
+        };
+      }
 
       this.currentUser = user;
       this.isLoggedIn = true;
@@ -87,6 +73,7 @@ export const useAuthStore = defineStore("auth", {
 
       return {
         success: true,
+        id: user.id,
       };
     },
   },
