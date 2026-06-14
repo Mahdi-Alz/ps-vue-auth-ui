@@ -1,6 +1,7 @@
 <script setup>
 import googleLogo from "@/assets/g-google-icon.svg";
 import { computed } from "vue";
+
 const props = defineProps({
   variant: {
     type: String,
@@ -9,13 +10,10 @@ const props = defineProps({
 });
 
 const buttonClass = computed(() => {
-  switch (props.variant) {
-    case "google":
-      return "bg-[#333333] font-normal text-[12px]";
-
-    default:
-      return "bg-[#007AFF] font-bold text-[15px] ";
+  if (props.variant === "google") {
+    return "bg-[#333333] font-normal text-[12px]";
   }
+  return "bg-[#007AFF] font-bold text-[15px] ";
 });
 </script>
 
