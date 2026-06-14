@@ -52,7 +52,9 @@ import FormInput from "@/components/FormInput.vue";
       <!-- redirect to sign in -->
       <p class="text-center font-roboto font-normal text-[12px]">
         Already have an account?
-        <span class="text-[#007AFF] ml-2">Sign in</span>
+        <router-link to="/signin" class="text-[#007AFF] ml-2"
+          >Sign in</router-link
+        >
       </p>
     </div>
   </div>

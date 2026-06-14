@@ -90,7 +90,9 @@ const handleSignin = () => {
       <!-- redirect to sign up -->
       <p class="text-center font-roboto font-normal text-[12px]">
         Don't have an account?
-        <span class="text-[#007AFF] ml-2">Sign up now</span>
+        <router-link to="/signup" class="text-[#007AFF] ml-2"
+          >Sign up now</router-link
+        >
       </p>
     </div>
   </div>
