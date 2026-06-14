@@ -1,6 +1,7 @@
 <script setup>
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
+const authStore = useAuthStore();
 </script>
 <template>
   <!-- full container -->
