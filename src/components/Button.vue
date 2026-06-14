@@ -10,10 +10,16 @@ const props = defineProps({
 });
 
 const buttonClass = computed(() => {
-  if (props.variant === "google") {
-    return "bg-[#333333] font-normal text-[12px]";
+  switch (props.variant) {
+    case "google":
+      return "bg-[#333333] font-normal text-[12px]";
+
+    case "signout":
+      return "bg-red-500 font-bold text-[15px]";
+
+    default:
+      return "bg-[#007AFF] font-bold text-[15px]";
   }
-  return "bg-[#007AFF] font-bold text-[15px] ";
 });
 </script>
 
@@ -28,7 +34,7 @@ const buttonClass = computed(() => {
     </div>
 
     <div v-else>
-      <span>Sign in</span>
+      <span>{{ variant === "signout" ? "Sign out" : "Sign in" }}</span>
     </div>
   </button>
 </template>
