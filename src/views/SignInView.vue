@@ -16,13 +16,13 @@ import FormInput from "@/components/FormInput.vue";
 
     <!-- form inputs -->
     <div class="flex flex-col gap-3">
-      <FormInput placeholder="Email or phone number" />
-      <FormInput placeholder="Enter password" />
+      <FormInput placeholder="Email or phone number" type="text" />
+      <FormInput placeholder="Enter password" type="password" />
       <div class="flex justify-between items-center text-[12px]">
         <label class="label">
           <input
             type="checkbox"
-            class="toggle toggle-sm bg-gray-200 border-gray-200 checked:border-[#007AFF] checked:bg-[#007AFF] mr-2"
+            class="toggle toggle-sm custom-toggle !w-10 bg-white border-gray-100 checked:border-gray-100 checked:bg-[#808080] mr-2"
           />
           Remember me
         </label>
@@ -32,5 +32,22 @@ import FormInput from "@/components/FormInput.vue";
 
     <!-- Sign In button -->
     <Button />
+
+    <!-- seprator line -->
+    <hr />
+
+    <!-- google button -->
+    <Button variant="google" />
+
+    <!-- redirect to sign up -->
+    <p class="text-center font-roboto font-normal text-[12px]">
+      Don't have an account? <span class="text-[#007AFF]">Sign up now</span>
+    </p>
   </div>
 </template>
+
+<style scoped>
+[type="checkbox"].toggle-sm {
+  --handleoffset: 1rem !important;
+}
+</style>

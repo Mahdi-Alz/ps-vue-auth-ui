@@ -8,3 +8,6 @@
 body {
   background-color: #ffffff;
 }
+.custom-toggle {
+  --tglbg: #f3f4f6; /* Tailwind gray-100 */
+}
