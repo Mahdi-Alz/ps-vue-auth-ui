@@ -23,6 +23,7 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: () => import("@/views/DashboardView.vue"),
+      //this page requires authentication
       meta: {
         requiresAuth: true,
       },
@@ -36,21 +37,23 @@ const router = createRouter({
 });
 
 // Ordered by Ali Rooholamini
-// Route-Guarding
-// TODO
-// router.beforeEach((to) => {
-//   const authStore = useAuthStore();
+// Route-Guarding: https://v3.router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
+router.beforeEach((to) => {
+  const authStore = useAuthStore();
 
-//   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-//     return { name: "sign-in" };
-//   }
-
-//   if (
-//     (to.name === "sign-in" || to.name === "sign-up") &&
-//     authStore.isLoggedIn
-//   ) {
-//     return { name: "dashboard" };
-//   }
-// });
+  //if the view page needs authentication AND the user is not logged in:
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    // redirect to SignInView
+    return { name: "sign-in" };
+  }
+  // if the user who already is logged in wants to go to SignInView or SignUpView
+  if (
+    (to.name === "sign-in" || to.name === "sign-up") &&
+    authStore.isLoggedIn
+  ) {
+    // redirect to DashboardView
+    return { name: "dashboard" };
+  }
+});
 
 export default router;
