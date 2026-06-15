@@ -35,20 +35,22 @@ const router = createRouter({
   ],
 });
 
-//route guarding
-router.beforeEach((to) => {
-  const authStore = useAuthStore();
+// Ordered by Ali Rooholamini
+// Route-Guarding
+// TODO
+// router.beforeEach((to) => {
+//   const authStore = useAuthStore();
 
-  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-    return { name: "sign-in" };
-  }
+//   if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+//     return { name: "sign-in" };
+//   }
 
-  if (
-    (to.name === "sign-in" || to.name === "sign-up") &&
-    authStore.isLoggedIn
-  ) {
-    return { name: "dashboard" };
-  }
-});
+//   if (
+//     (to.name === "sign-in" || to.name === "sign-up") &&
+//     authStore.isLoggedIn
+//   ) {
+//     return { name: "dashboard" };
+//   }
+// });
 
 export default router;
