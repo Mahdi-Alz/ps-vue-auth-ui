@@ -31,6 +31,8 @@ const handleSignin = () => {
   //router.push("/dashboard/");
   // to check the console
   console.log("success login id:" + resultSignin.id);
+  identifier.value = "";
+  password.value = "";
 };
 </script>
 <template>

@@ -55,6 +55,11 @@ const handleSignup = () => {
   //router.push("/dashboard/");
   // to check the console
   console.log("success login id:" + resultSignup.id);
+  name.value = "";
+  email.value = "";
+  phone.value = "";
+  password.value = "";
+  confirmPassword.value = "";
 };
 </script>
 <template>
