@@ -36,7 +36,7 @@ const router = createRouter({
   ],
 });
 
-// Ordered by Ali Rooholamini
+// Requested by Ali Rooholamini
 // Route-Guarding: https://v3.router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to) => {
   const authStore = useAuthStore();
