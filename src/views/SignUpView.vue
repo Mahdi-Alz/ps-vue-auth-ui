@@ -52,14 +52,12 @@ const handleSignup = () => {
     errorMessage.value = resultSignup.message;
     return;
   }
-  //router.push("/dashboard/");
-  // to check the console
-  console.log("success login id:" + resultSignup.id);
   name.value = "";
   email.value = "";
   phone.value = "";
   password.value = "";
   confirmPassword.value = "";
+  router.push("/dashboard");
 };
 </script>
 <template>
@@ -138,6 +136,7 @@ const handleSignup = () => {
   </div>
 </template>
 
+<!-- Alireza and I added this style override to customize the toggle appearance ;) -->
 <style scoped>
 [type="checkbox"].toggle-sm {
   --handleoffset: 1rem !important;

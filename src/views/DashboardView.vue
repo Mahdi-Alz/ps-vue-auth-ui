@@ -1,5 +1,15 @@
 <script setup>
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/AuthStore";
 import Button from "@/components/Button.vue";
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const handleSignout = () => {
+  authStore.signout();
+  router.push("/signin");
+};
 </script>
 
 <template>
@@ -12,11 +22,13 @@ import Button from "@/components/Button.vue";
     >
     <div class="card bg-gray-200 text-[#1A1A1A] w-full font-normal font-roboto">
       <div class="card-body">
-        <h2 class="card-title">Name:</h2>
-        <p>Email:</p>
-        <p>Phone No.:</p>
+        <h2 class="card-title">Name: {{ authStore.currentUser?.name }}</h2>
+        <p>Email: {{ authStore.currentUser?.email }}</p>
+        <p>Phone No.: {{ authStore.currentUser?.phone }}</p>
       </div>
     </div>
-    <Button variant="signout" class="w-full">Sign out</Button>
+    <Button variant="signout" class="w-full" @click="handleSignout"
+      >Sign out</Button
+    >
   </div>
 </template>

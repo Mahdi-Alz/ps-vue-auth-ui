@@ -28,11 +28,9 @@ const handleSignin = () => {
     errorMessage.value = resultSignin.message;
     return;
   }
-  //router.push("/dashboard/");
-  // to check the console
-  console.log("success login id:" + resultSignin.id);
   identifier.value = "";
   password.value = "";
+  router.push("/dashboard");
 };
 </script>
 <template>

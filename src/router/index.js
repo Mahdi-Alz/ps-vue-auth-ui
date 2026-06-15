@@ -1,9 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
 import SignInView from "@/views/SignInView.vue";
+import { useAuthStore } from "@/stores/AuthStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/",
+      //redirect user if they're already signed in
+      redirect: () => {
+        const authStore = useAuthStore();
+
+        return authStore.isLoggedIn ? "/dashboard" : "/signin";
+      },
+    },
     {
       path: "/signin",
       name: "sign-in",
@@ -13,6 +23,9 @@ const router = createRouter({
       path: "/dashboard",
       name: "dashboard",
       component: () => import("@/views/DashboardView.vue"),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/signup",
@@ -20,6 +33,22 @@ const router = createRouter({
       component: () => import("@/views/SignUpView.vue"),
     },
   ],
+});
+
+//route guarding
+router.beforeEach((to) => {
+  const authStore = useAuthStore();
+
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    return { name: "sign-in" };
+  }
+
+  if (
+    (to.name === "sign-in" || to.name === "sign-up") &&
+    authStore.isLoggedIn
+  ) {
+    return { name: "dashboard" };
+  }
 });
 
 export default router;
