@@ -41,8 +41,8 @@ const handleSignup = () => {
     errorMessage.value = "Passwords do not match";
     return;
   }
-  // then we pass them to signin function in Pinia Store and get the result of sign in
-  const result = authStore.signup({
+  // then we pass them as an Object to signup function in Pinia Store and get the result of sign up
+  const resultSignup = authStore.signup({
     name: name.value,
     email: email.value,
     phone: phone.value,
@@ -54,7 +54,7 @@ const handleSignup = () => {
   }
   //router.push("/dashboard/");
   // to check the console
-  console.log("success login id:" + resultSignin.id);
+  console.log("success login id:" + resultSignup.id);
 };
 </script>
 <template>
