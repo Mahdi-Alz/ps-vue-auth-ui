@@ -1,6 +1,61 @@
 <script setup>
+// import required
+import { ref } from "vue";
+import { useAuthStore } from "@/stores/AuthStore";
+import { useRouter } from "vue-router";
+
+// import components
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
+
+// use imports
+const authStore = useAuthStore();
+const router = useRouter();
+
+// create refs for each form input model
+const name = ref("");
+const email = ref("");
+const phone = ref("");
+const password = ref("");
+const confirmPassword = ref("");
+
+// shown error
+const errorMessage = ref("");
+
+// Sign up button handler
+const handleSignup = () => {
+  errorMessage.value = "";
+  // first check if fields are not empty
+  if (
+    !name.value.trim() ||
+    !email.value.trim() ||
+    !phone.value.trim() ||
+    !password.value.trim() ||
+    !confirmPassword.value.trim()
+  ) {
+    errorMessage.value = "All fields are required";
+    return;
+  }
+  // check if passwords are the same
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = "Passwords do not match";
+    return;
+  }
+  // then we pass them to signin function in Pinia Store and get the result of sign in
+  const result = authStore.signup({
+    name: name.value,
+    email: email.value,
+    phone: phone.value,
+    password: password.value,
+  });
+  if (!resultSignup.success) {
+    errorMessage.value = resultSignup.message;
+    return;
+  }
+  //router.push("/dashboard/");
+  // to check the console
+  console.log("success login id:" + resultSignin.id);
+};
 </script>
 <template>
   <!-- full container -->
@@ -20,28 +75,46 @@ import FormInput from "@/components/FormInput.vue";
       <h2
         class="text-[#1A1A1A] font-poppins font-semibold text-[20px] leading-[28px]"
       >
-        Nice to see you again
+        Nice to see you
       </h2>
 
       <!-- form inputs -->
       <div class="flex flex-col gap-3">
-        <FormInput placeholder="Enter your full name" label="name" />
-        <FormInput placeholder="Email address" label="Email" type="email" />
-        <FormInput placeholder="Phone number" label="Phone No." type="tel" />
         <FormInput
+          v-model="name"
+          placeholder="Enter your full name"
+          label="name"
+        />
+        <FormInput
+          v-model="email"
+          placeholder="Email address"
+          label="Email"
+          type="email"
+        />
+        <FormInput
+          v-model="phone"
+          placeholder="Phone number"
+          label="Phone No."
+          type="tel"
+        />
+        <FormInput
+          v-model="password"
           placeholder="Enter password"
           label="Password"
           type="password"
         />
         <FormInput
+          v-model="confirmPassword"
           placeholder="Confirm password"
           label="Confirm Password"
           type="password"
         />
       </div>
-
+      <span v-if="errorMessage" class="text-red-500 text-sm text-center">
+        {{ errorMessage }}
+      </span>
       <!-- Sign Up button -->
-      <Button>Sign Up</Button>
+      <Button @click="handleSignup"> Sign Up </Button>
 
       <!-- seprator line -->
       <hr />

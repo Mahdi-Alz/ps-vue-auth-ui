@@ -17,6 +17,6 @@ import Button from "@/components/Button.vue";
         <p>Phone No.:</p>
       </div>
     </div>
-    <Button variant="signout" class="w-full" />
+    <Button variant="signout" class="w-full">Sign out</Button>
   </div>
 </template>

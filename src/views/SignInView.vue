@@ -1,17 +1,20 @@
 <script setup>
+// import required
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/AuthStore";
 import { useRouter } from "vue-router";
-
+// import components
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
-
-// const router = useRouter();
+// use imports
 const authStore = useAuthStore();
+const router = useRouter();
+// create refs for each form input model
 const identifier = ref("");
 const password = ref("");
+//shown error
 const errorMessage = ref("");
-
+// Sign in button handler
 const handleSignin = () => {
   errorMessage.value = "";
   // first check if fields are not empty

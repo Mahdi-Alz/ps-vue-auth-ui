@@ -76,5 +76,7 @@ export const useAuthStore = defineStore("auth", {
         id: user.id,
       };
     },
+    /* --------------------------------- sign up -------------------------------- */
+    signup() {},
   },
 });
