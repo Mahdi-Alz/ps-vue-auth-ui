@@ -18,9 +18,9 @@ import FormInput from "@/components/FormInput.vue";
 const authStore = useAuthStore();
 const router = useRouter();
 
-// create refs for each form input model
 // Suggested by Alireza javadzadeh
 // TODO refactor this to a object reactive
+// create refs for each form input model
 // const name = ref("");
 // const email = ref("");
 // const phone = ref("");
@@ -28,11 +28,11 @@ const router = useRouter();
 // const confirmPassword = ref("");
 
 const form = reactive({
-  name: "",
-  email: "",
-  phone: "",
-  password: "",
-  confirmPassword: "",
+  name: { value: "", error: "" },
+  email: { value: "", error: "" },
+  phone: { value: "", error: "" },
+  password: { value: "", error: "" },
+  confirmPassword: { value: "", error: "" },
 });
 
 // shown error
@@ -41,63 +41,66 @@ const errorMessage = ref("");
 // Sign up button handler
 const handleSignup = () => {
   errorMessage.value = "";
+  form.name.error = "";
+  form.name.email = "";
+  form.phone.error = "";
+  form.password.error = "";
+  form.confirmPassword.error = "";
+
   // first check if fields are not empty
   if (
-    !form.name.trim() ||
-    !form.email.trim() ||
-    !form.phone.trim() ||
-    !form.password.trim() ||
-    !form.confirmPassword.trim()
+    !form.name.value.trim() ||
+    !form.email.value.trim() ||
+    !form.phone.value.trim() ||
+    !form.password.value.trim() ||
+    !form.confirmPassword.value.trim()
   ) {
     errorMessage.value = "All fields are required";
     return;
   }
   // check if passwords are the same
-  if (form.password !== form.confirmPassword) {
-    errorMessage.value = "Passwords do not match";
-    return;
+  if (form.password.value !== form.confirmPassword.value) {
+    // errorMessage.value = "Passwords do not match";
+    form.confirmPassword.error = "Passwords do not match";
   }
 
   //check if inputs are valid (using regex)
-  if (!isNameValid(form.name)) {
-    errorMessage.value = "Invalid name";
-    return;
+  if (!isNameValid(form.name.value)) {
+    // errorMessage.value = "Invalid name";
+    form.name.error = "Invalid Name";
   }
 
-  if (!isEmailValid(form.email)) {
-    errorMessage.value = "Invalid email";
-    return;
+  if (!isEmailValid(form.email.value)) {
+    // errorMessage.value = "Invalid email";
+    form.email.error = "Invalid email";
   }
 
-  if (!isPhoneValid(form.phone)) {
-    errorMessage.value = "Invalid phone number";
-    return;
+  if (!isPhoneValid(form.phone.value)) {
+    // errorMessage.value = "Invalid phone number";
+    form.phone.error = "Invalid Phone Number";
   }
 
-  if (!isPasswordValid(form.password)) {
-    errorMessage.value =
-      "Password must contain 9+ characters, uppercase, lowercase and number";
-    return;
+  if (!isPasswordValid(form.password.value)) {
+    // errorMessage.value = "Password must contain 9+ characters, uppercase, lowercase and number";
+    form.password.error =
+      "Must contain 9+ chars, uppercase, lowercase and number";
   }
 
+  const hasErrors = Object.values(form).some((field) => field.error);
+
+  if (hasErrors) return;
   // then we pass them as an Object to signup function in Pinia Store and get the result of sign up
   const resultSignup = authStore.signup({
-    name: form.name,
-    email: form.email,
-    phone: form.phone,
-    password: form.password,
+    name: form.name.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    password: form.password.value,
   });
   if (!resultSignup.success) {
     errorMessage.value = resultSignup.message;
     return;
   }
 
-  // empty fileds for more insurance
-  form.name = "";
-  form.email = "";
-  form.phone = "";
-  form.password = "";
-  form.confirmPassword = "";
   router.push("/dashboard");
 };
 </script>
@@ -125,33 +128,39 @@ const handleSignup = () => {
       <!-- form inputs -->
       <div class="flex flex-col gap-3">
         <FormInput
-          v-model="form.name"
+          v-model="form.name.value"
           placeholder="Enter your full name"
           label="name"
+          type="text"
+          :error="form.name.error"
         />
         <FormInput
-          v-model="form.email"
+          v-model="form.email.value"
           placeholder="Email address"
           label="Email"
           type="email"
+          :error="form.email.error"
         />
         <FormInput
-          v-model="form.phone"
+          v-model="form.phone.value"
           placeholder="Phone number"
           label="Phone No."
           type="tel"
+          :error="form.phone.error"
         />
         <FormInput
-          v-model="form.password"
+          v-model="form.password.value"
           placeholder="Enter password"
           label="Password"
           type="password"
+          :error="form.password.error"
         />
         <FormInput
-          v-model="form.confirmPassword"
+          v-model="form.confirmPassword.value"
           placeholder="Confirm password"
           label="Confirm Password"
           type="password"
+          :error="form.confirmPassword.error"
         />
       </div>
       <span v-if="errorMessage" class="text-red-500 text-sm text-center">

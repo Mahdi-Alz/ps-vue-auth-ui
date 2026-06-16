@@ -13,6 +13,10 @@ const props = defineProps({
     type: String,
     default: "text",
   },
+  error: {
+    type: String,
+    default: "",
+  },
 });
 // to manage eye symbol toggle
 const isPasswordShown = ref(false);
@@ -37,7 +41,8 @@ const isPasswordShown = ref(false);
             : props.type
         "
         :placeholder="placeholder"
-        class="input !rounded-[6px] w-full pr-12 px-4 py-[14px] font-roboto font-normal bg-gray-100 placeholder:text-[#808080] border border-gray-200"
+        class="input !rounded-[6px] w-full pr-12 px-4 py-[14px] font-roboto font-normal bg-gray-200 placeholder:text-[#808080] border border-gray-200"
+        :class="props.error.length > 0 && '!input-error'"
       />
       <button
         v-if="props.type === 'password'"
@@ -50,6 +55,9 @@ const isPasswordShown = ref(false);
           class="text-[#4D4D4D] w-4 h-4"
         />
       </button>
+      <span class="mt-2 font-roboto text-[11px] font-normal text-red-600 px-4">
+        {{ props.error }}
+      </span>
     </div>
   </div>
 </template>

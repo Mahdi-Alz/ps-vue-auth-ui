@@ -59,11 +59,13 @@ const handleSignin = () => {
         <FormInput
           v-model="identifier"
           placeholder="Email or phone number"
+          label="name"
           type="text"
         />
         <FormInput
           v-model="password"
           placeholder="Enter password"
+          label="password"
           type="password"
         />
         <span v-if="errorMessage" class="text-red-500 text-sm text-center">
@@ -73,7 +75,7 @@ const handleSignin = () => {
           <label class="label justify-start grow gap-2 px-0">
             <input
               type="checkbox"
-              class="toggle toggle-sm custom-toggle !w-10 bg-white border-gray-100 checked:border-gray-100 checked:bg-[#808080]"
+              class="toggle toggle-sm custom-toggle !w-10 bg-white border-gray-200 checked:border-gray-200 checked:bg-[#808080]"
             />
             <span>Remember me</span>
           </label>
