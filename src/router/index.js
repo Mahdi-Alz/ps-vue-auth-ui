@@ -37,8 +37,7 @@ const router = createRouter({
   ],
 });
 
-// Requested by Ali Rooholamini
-// Route-Guarding: https://v3.router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
+// based on Route-Guarding: https://v3.router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to) => {
   const authStore = useAuthStore();
 
