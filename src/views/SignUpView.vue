@@ -42,7 +42,7 @@ const errorMessage = ref("");
 const handleSignup = () => {
   errorMessage.value = "";
   form.name.error = "";
-  form.name.email = "";
+  form.email.error = "";
   form.phone.error = "";
   form.password.error = "";
   form.confirmPassword.error = "";
@@ -130,7 +130,7 @@ const handleSignup = () => {
         <FormInput
           v-model="form.name.value"
           placeholder="Enter your full name"
-          label="name"
+          label="Name"
           type="text"
           :error="form.name.error"
         />

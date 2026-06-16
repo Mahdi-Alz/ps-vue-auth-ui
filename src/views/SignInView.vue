@@ -59,13 +59,13 @@ const handleSignin = () => {
         <FormInput
           v-model="identifier"
           placeholder="Email or phone number"
-          label="name"
+          label="Name"
           type="text"
         />
         <FormInput
           v-model="password"
           placeholder="Enter password"
-          label="password"
+          label="Password"
           type="password"
         />
         <span v-if="errorMessage" class="text-red-500 text-sm text-center">
