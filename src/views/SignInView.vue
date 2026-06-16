@@ -1,7 +1,7 @@
 <script setup>
 // import required
 import { ref } from "vue";
-import { useAuthStore } from "@/stores/AuthStore";
+import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 // import components
 import Button from "@/components/Button.vue";

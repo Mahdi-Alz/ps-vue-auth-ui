@@ -1,8 +1,14 @@
 <script setup>
 // import required
 import { ref } from "vue";
-import { useAuthStore } from "@/stores/AuthStore";
+import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
+import {
+  isNameValid,
+  isEmailValid,
+  isPhoneValid,
+  isPasswordValid,
+} from "@/utils/formValidation";
 
 // import components
 import Button from "@/components/Button.vue";
@@ -41,6 +47,34 @@ const handleSignup = () => {
     errorMessage.value = "Passwords do not match";
     return;
   }
+
+  //check if inputs are valid (using regex)
+  if (!isNameValid(name.value)) {
+    errorMessage.value = "Invalid name";
+    return;
+  }
+
+  if (!isEmailValid(email.value)) {
+    errorMessage.value = "Invalid email";
+    return;
+  }
+
+  if (!isPhoneValid(phone.value)) {
+    errorMessage.value = "Invalid phone number";
+    return;
+  }
+
+  if (!isPasswordValid(password.value)) {
+    errorMessage.value =
+      "Password must contain 9+ characters, uppercase, lowercase and number";
+    return;
+  }
+
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = "Passwords do not match";
+    return;
+  }
+
   // then we pass them as an Object to signup function in Pinia Store and get the result of sign up
   const resultSignup = authStore.signup({
     name: name.value,
@@ -52,6 +86,8 @@ const handleSignup = () => {
     errorMessage.value = resultSignup.message;
     return;
   }
+
+  // empty fileds for more insurance
   name.value = "";
   email.value = "";
   phone.value = "";
