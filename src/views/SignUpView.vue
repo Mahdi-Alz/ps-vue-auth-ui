@@ -3,6 +3,7 @@
 import { ref, reactive } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import {
   isNameValid,
   isEmailValid,
@@ -17,6 +18,7 @@ import FormInput from "@/components/FormInput.vue";
 // use imports
 const authStore = useAuthStore();
 const router = useRouter();
+const toast = useToast();
 
 // Suggested by Alireza javadzadeh
 // TODO refactor this to a object reactive
@@ -56,6 +58,7 @@ const handleSignup = () => {
     !form.confirmPassword.value.trim()
   ) {
     errorMessage.value = "All fields are required";
+    toast.error("All fields are required");
     return;
   }
   // check if passwords are the same
@@ -98,9 +101,10 @@ const handleSignup = () => {
   });
   if (!resultSignup.success) {
     errorMessage.value = resultSignup.message;
+    toast.error(resultSignup.message);
     return;
   }
-
+  toast.success("Account created successfully!");
   router.push("/dashboard");
 };
 </script>

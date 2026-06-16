@@ -3,12 +3,15 @@
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 // import components
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 // use imports
 const authStore = useAuthStore();
 const router = useRouter();
+const toast = useToast();
+
 // create refs for each form input model
 const identifier = ref("");
 const password = ref("");
@@ -20,16 +23,17 @@ const handleSignin = () => {
   // first check if fields are not empty
   if (!identifier.value.trim() || !password.value.trim()) {
     errorMessage.value = "All the fields are required";
+    toast.error("All fields are required");
     return;
   }
   // then we pass them to signin function in Pinia Store and get the result of sign in
   const resultSignin = authStore.signin(identifier.value, password.value);
   if (!resultSignin.success) {
     errorMessage.value = resultSignin.message;
+    toast.error(resultSignin);
     return;
   }
-  identifier.value = "";
-  password.value = "";
+  toast.success("Signed in successfully!");
   router.push("/dashboard");
 };
 </script>
