@@ -14,21 +14,14 @@ import {
 // import components
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
+import AuthLayout from "@/layouts/AuthLayout.vue";
 
 // use imports
 const authStore = useAuthStore();
 const router = useRouter();
 const toast = useToast();
 
-// Suggested by Alireza javadzadeh
-// TODO refactor this to a object reactive
 // create refs for each form input model
-// const name = ref("");
-// const email = ref("");
-// const phone = ref("");
-// const password = ref("");
-// const confirmPassword = ref("");
-
 const form = reactive({
   name: { value: "", error: "" },
   email: { value: "", error: "" },
@@ -109,88 +102,75 @@ const handleSignup = () => {
 };
 </script>
 <template>
-  <!-- full container -->
-  <div class="md:flex m-auto min-h-screen max-w-[1440px] overflow-hidden">
-    <div class="hidden md:block md:w-1/2 lg:w-2/3 h-screen">
-      <img
-        src="../assets/banner.png"
-        alt="seasideview-banner"
-        class="w-full h-full object-cover"
+  <AuthLayout>
+    <!-- title -->
+    <h2
+      class="text-[#1A1A1A] font-poppins font-semibold text-[20px] leading-[28px]"
+    >
+      Nice to see you
+    </h2>
+
+    <!-- form inputs -->
+    <div class="flex flex-col gap-3">
+      <FormInput
+        v-model="form.name.value"
+        placeholder="Enter your full name"
+        label="Name"
+        type="text"
+        :error="form.name.error"
+      />
+      <FormInput
+        v-model="form.email.value"
+        placeholder="Email address"
+        label="Email"
+        type="email"
+        :error="form.email.error"
+      />
+      <FormInput
+        v-model="form.phone.value"
+        placeholder="Phone number"
+        label="Phone No."
+        type="tel"
+        :error="form.phone.error"
+      />
+      <FormInput
+        v-model="form.password.value"
+        placeholder="Enter password"
+        label="Password"
+        type="password"
+        :error="form.password.error"
+      />
+      <FormInput
+        v-model="form.confirmPassword.value"
+        placeholder="Confirm password"
+        label="Confirm Password"
+        type="password"
+        :error="form.confirmPassword.error"
       />
     </div>
-    <!-- sign in container -->
-    <div
-      class="p-4 pt-6 md:pt-4 rounded-2xl max-w-[456px] min-w-[256px] h-screen mx-auto flex flex-col gap-6 md:w-1/2 lg:w-1/3 md:p-12 overflow-hidden"
-    >
-      <!-- title -->
-      <h2
-        class="text-[#1A1A1A] font-poppins font-semibold text-[20px] leading-[28px]"
+    <span v-if="errorMessage" class="text-red-500 text-sm text-center">
+      {{ errorMessage }}
+    </span>
+    <!-- Sign Up button -->
+    <Button @click="handleSignup"> Sign Up </Button>
+
+    <!-- seprator line -->
+    <hr />
+
+    <!-- google sign up button -->
+    <Button variant="google">Sign Up with Google</Button>
+
+    <!-- redirect to sign in -->
+    <p class="text-center font-roboto font-normal text-[12px]">
+      Already have an account?
+      <router-link to="/signin" class="text-[#007AFF] ml-2"
+        >Sign in</router-link
       >
-        Nice to see you
-      </h2>
-
-      <!-- form inputs -->
-      <div class="flex flex-col gap-3">
-        <FormInput
-          v-model="form.name.value"
-          placeholder="Enter your full name"
-          label="Name"
-          type="text"
-          :error="form.name.error"
-        />
-        <FormInput
-          v-model="form.email.value"
-          placeholder="Email address"
-          label="Email"
-          type="email"
-          :error="form.email.error"
-        />
-        <FormInput
-          v-model="form.phone.value"
-          placeholder="Phone number"
-          label="Phone No."
-          type="tel"
-          :error="form.phone.error"
-        />
-        <FormInput
-          v-model="form.password.value"
-          placeholder="Enter password"
-          label="Password"
-          type="password"
-          :error="form.password.error"
-        />
-        <FormInput
-          v-model="form.confirmPassword.value"
-          placeholder="Confirm password"
-          label="Confirm Password"
-          type="password"
-          :error="form.confirmPassword.error"
-        />
-      </div>
-      <span v-if="errorMessage" class="text-red-500 text-sm text-center">
-        {{ errorMessage }}
-      </span>
-      <!-- Sign Up button -->
-      <Button @click="handleSignup"> Sign Up </Button>
-
-      <!-- seprator line -->
-      <hr />
-
-      <!-- google sign up button -->
-      <Button variant="google">Sign Up with Google</Button>
-
-      <!-- redirect to sign in -->
-      <p class="text-center font-roboto font-normal text-[12px]">
-        Already have an account?
-        <router-link to="/signin" class="text-[#007AFF] ml-2"
-          >Sign in</router-link
-        >
-      </p>
-    </div>
-  </div>
+    </p>
+  </AuthLayout>
 </template>
 
-<!-- Alireza and I added this style override to customize the toggle appearance ;) -->
+<!-- override to customize the toggle appearance -->
 <style scoped>
 [type="checkbox"].toggle-sm {
   --handleoffset: 1rem !important;

@@ -4,10 +4,10 @@ import generateUniqueId from "generate-unique-id";
 
 const default_user = {
   id: "123",
-  name: "Default User",
-  email: "default@example.com",
+  name: "test",
+  email: "test@test.com",
   phone: "0123456789",
-  password: "DefaultUser123",
+  password: "Test12345",
 };
 
 export const useAuthStore = defineStore("auth", {
@@ -24,32 +24,11 @@ export const useAuthStore = defineStore("auth", {
 
   //getters
   getters: {
-    // Suggested by Alireza
-    // TODO: do sth in it is signed in or not!
+    // Idk what is needed here
   },
 
   //actions
   actions: {
-    // Suggested by Alireza Javadzadeh
-    /* --------- checking validation -------- */
-    // ****** the block below is moved to formValidation.js file ******
-    // isNameValid(name) {
-    //   // at least 2 characters, letters and spaces only
-    //   return /^[A-Za-z\s]{2,50}$/.test(name.trim());
-    // },
-    // isEmailValid(email) {
-    //   // default email format
-    //   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    // },
-    // isPhoneValid(phone) {
-    //   // starts with 09 followed by 9 digits
-    //   return /^09\d{9}$/.test(phone);
-    // },
-    // isPasswordValid(password) {
-    //   // at least: 9 chars, 1 uppercase, 1 lowercase, 1 number
-    //   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/.test(password);
-    // },
-
     /* --------------------------------- sign in -------------------------------- */
     signin(identifier, password) {
       // try find the user
@@ -81,24 +60,6 @@ export const useAuthStore = defineStore("auth", {
 
     /* --------------------------------- sign up -------------------------------- */
     signup(userData) {
-      //first check input validation
-      // if (!this.isNameValid(userData.name)) {
-      //   return { success: false, message: "Invalid name" };
-      // }
-      // if (!this.isEmailValid(userData.email)) {
-      //   return { success: false, message: "Invalid email" };
-      // }
-      // if (!this.isPhoneValid(userData.phone)) {
-      //   return { success: false, message: "Invalid phone number" };
-      // }
-      // if (!this.isPasswordValid(userData.password)) {
-      //   return {
-      //     success: false,
-      //     message:
-      //       "Password must contain 9+ characters, uppercase, lowercase and number",
-      //   };
-      // }
-
       // check if we already have this user
       const existingUser = this.users.find(
         (user) =>
