@@ -1,6 +1,6 @@
 <script setup>
 // import required
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 import {
@@ -19,11 +19,21 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 // create refs for each form input model
-const name = ref("");
-const email = ref("");
-const phone = ref("");
-const password = ref("");
-const confirmPassword = ref("");
+// Suggested by Alireza javadzadeh
+// TODO refactor this to a object reactive
+// const name = ref("");
+// const email = ref("");
+// const phone = ref("");
+// const password = ref("");
+// const confirmPassword = ref("");
+
+const form = reactive({
+  name: "",
+  email: "",
+  phone: "",
+  password: "",
+  confirmPassword: "",
+});
 
 // shown error
 const errorMessage = ref("");
@@ -33,54 +43,49 @@ const handleSignup = () => {
   errorMessage.value = "";
   // first check if fields are not empty
   if (
-    !name.value.trim() ||
-    !email.value.trim() ||
-    !phone.value.trim() ||
-    !password.value.trim() ||
-    !confirmPassword.value.trim()
+    !form.name.trim() ||
+    !form.email.trim() ||
+    !form.phone.trim() ||
+    !form.password.trim() ||
+    !form.confirmPassword.trim()
   ) {
     errorMessage.value = "All fields are required";
     return;
   }
   // check if passwords are the same
-  if (password.value !== confirmPassword.value) {
+  if (form.password !== form.confirmPassword) {
     errorMessage.value = "Passwords do not match";
     return;
   }
 
   //check if inputs are valid (using regex)
-  if (!isNameValid(name.value)) {
+  if (!isNameValid(form.name)) {
     errorMessage.value = "Invalid name";
     return;
   }
 
-  if (!isEmailValid(email.value)) {
+  if (!isEmailValid(form.email)) {
     errorMessage.value = "Invalid email";
     return;
   }
 
-  if (!isPhoneValid(phone.value)) {
+  if (!isPhoneValid(form.phone)) {
     errorMessage.value = "Invalid phone number";
     return;
   }
 
-  if (!isPasswordValid(password.value)) {
+  if (!isPasswordValid(form.password)) {
     errorMessage.value =
       "Password must contain 9+ characters, uppercase, lowercase and number";
     return;
   }
 
-  if (password.value !== confirmPassword.value) {
-    errorMessage.value = "Passwords do not match";
-    return;
-  }
-
   // then we pass them as an Object to signup function in Pinia Store and get the result of sign up
   const resultSignup = authStore.signup({
-    name: name.value,
-    email: email.value,
-    phone: phone.value,
-    password: password.value,
+    name: form.name,
+    email: form.email,
+    phone: form.phone,
+    password: form.password,
   });
   if (!resultSignup.success) {
     errorMessage.value = resultSignup.message;
@@ -88,11 +93,11 @@ const handleSignup = () => {
   }
 
   // empty fileds for more insurance
-  name.value = "";
-  email.value = "";
-  phone.value = "";
-  password.value = "";
-  confirmPassword.value = "";
+  form.name = "";
+  form.email = "";
+  form.phone = "";
+  form.password = "";
+  form.confirmPassword = "";
   router.push("/dashboard");
 };
 </script>
@@ -120,30 +125,30 @@ const handleSignup = () => {
       <!-- form inputs -->
       <div class="flex flex-col gap-3">
         <FormInput
-          v-model="name"
+          v-model="form.name"
           placeholder="Enter your full name"
           label="name"
         />
         <FormInput
-          v-model="email"
+          v-model="form.email"
           placeholder="Email address"
           label="Email"
           type="email"
         />
         <FormInput
-          v-model="phone"
+          v-model="form.phone"
           placeholder="Phone number"
           label="Phone No."
           type="tel"
         />
         <FormInput
-          v-model="password"
+          v-model="form.password"
           placeholder="Enter password"
           label="Password"
           type="password"
         />
         <FormInput
-          v-model="confirmPassword"
+          v-model="form.confirmPassword"
           placeholder="Confirm password"
           label="Confirm Password"
           type="password"
