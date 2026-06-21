@@ -11,3 +11,12 @@ body {
 .custom-toggle {
   --tglbg: #e5e7eb; /* Tailwind gray-100 */
 }
+
+.auth-panel-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.auth-panel-scroll::-webkit-scrollbar {
+  display: none;
+}

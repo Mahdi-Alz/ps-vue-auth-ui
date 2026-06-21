@@ -12,7 +12,7 @@
     </div>
     <!-- right side -->
     <div
-      class="p-4 pt-6 md:pt-4 rounded-2xl max-w-[456px] min-w-[256px] h-screen mx-auto flex flex-col gap-6 md:w-1/2 lg:w-1/3 md:p-12 overflow-hidden"
+      class="auth-panel-scroll p-4 pt-6 md:pt-4 rounded-2xl max-w-[456px] min-w-[256px] h-screen mx-auto flex flex-col gap-6 md:w-1/2 lg:w-1/3 md:p-12 overflow-y-auto overscroll-contain"
     >
       <slot />
     </div>
