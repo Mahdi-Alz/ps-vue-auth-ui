@@ -1,16 +1,17 @@
 export function isNameValid(name) {
-  // at least 2 characters, letters and spaces only
-  return /^[A-Za-z\s]{2,50}$/.test(name.trim());
+  return /^[A-Za-z\s]{2,50}$/.test(name.trim()) ? "" : "Invalid Name";
 }
+
 export function isEmailValid(email) {
-  // default email format
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? "" : "Invalid email";
 }
+
 export function isPhoneValid(phone) {
-  // starts with 09 followed by 9 digits
-  return /^09\d{9}$/.test(phone);
+  return /^09\d{9}$/.test(phone) ? "" : "Invalid Phone Number";
 }
+
 export function isPasswordValid(password) {
-  // at least: 9 chars, 1 uppercase, 1 lowercase, 1 number
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/.test(password);
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,}$/.test(password)
+    ? ""
+    : "Must contain 9+ chars, uppercase, lowercase and number";
 }
