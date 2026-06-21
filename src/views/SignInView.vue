@@ -1,6 +1,6 @@
 <script setup>
 // import required
-import googleLogo from "@/assets/g-google-icon.svg";
+import googleLogo from "@/assets/icons/g-google-icon.svg";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";

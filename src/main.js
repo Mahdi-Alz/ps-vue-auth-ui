@@ -1,6 +1,6 @@
 import "@fontsource/poppins";
 import "@fontsource/roboto";
-import "./assets/main.css";
+import "./assets/css/main.css";
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 

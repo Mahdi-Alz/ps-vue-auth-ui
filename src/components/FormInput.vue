@@ -23,6 +23,11 @@ const isPasswordShown = ref(false);
 
 const handleInput = () => {
   if (!props.validator) return;
+  if (!model.value) {
+    error.value = "";
+    emit("hasError", false);
+    return;
+  }
   error.value = props.validator(model.value);
   emit("hasError", error.value.length > 0);
 };

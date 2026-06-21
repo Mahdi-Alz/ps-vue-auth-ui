@@ -1,11 +1,13 @@
-<script setup></script>
+<script setup>
+import bannerImage from "@/assets/images/banner.png";
+</script>
 
 <template>
   <div class="container mx-auto min-h-screen overflow-hidden md:flex">
     <!-- left side -->
     <div class="hidden md:block md:w-1/2 lg:w-2/3 h-screen">
       <img
-        src="@/assets/banner.png"
+        :src="bannerImage"
         alt="seasideview-banner"
         class="w-full h-full object-cover"
       />
