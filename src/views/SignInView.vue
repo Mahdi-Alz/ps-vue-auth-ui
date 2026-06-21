@@ -5,19 +5,23 @@ import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
-// import components
+import { isIdentifierValid } from "@/utils/formValidation";
+
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
-// use imports
+
 const authStore = useAuthStore();
 const router = useRouter();
 const toast = useToast();
 
-// create refs for each form input model
 const identifier = ref("");
 const password = ref("");
-//shown error
+
+const errors = ref({
+  identifier: false,
+});
+
 const errorMessage = ref("");
 // Sign in button handler
 const handleSignin = () => {
@@ -28,6 +32,8 @@ const handleSignin = () => {
     toast.error("All fields are required");
     return;
   }
+  if (errors.value.identifier) return;
+
   // then we pass them to signin function in Pinia Store and get the result of sign in
   const resultSignin = authStore.signin(identifier.value, password.value);
   if (!resultSignin.success) {
@@ -54,13 +60,14 @@ const handleSignin = () => {
         v-model="identifier"
         placeholder="Email or phone number"
         label="Login"
-        type="text"
+        :validator="isIdentifierValid"
+        @has-error="errors.identifier = $event"
       />
       <FormInput
         v-model="password"
         placeholder="Enter password"
         label="Password"
-        type="password"
+        password
       />
       <span v-if="errorMessage" class="text-red-500 text-sm text-center">
         {{ errorMessage }}</span

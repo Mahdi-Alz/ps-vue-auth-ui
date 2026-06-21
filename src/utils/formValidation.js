@@ -15,3 +15,9 @@ export function isPasswordValid(password) {
     ? ""
     : "Must contain 9+ chars, uppercase, lowercase and number";
 }
+
+export function isIdentifierValid(identifier) {
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+  const isPhone = /^09\d{9}$/.test(identifier);
+  return isEmail || isPhone ? "" : "Enter a valid email or phone number";
+}
