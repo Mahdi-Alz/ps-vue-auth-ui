@@ -8,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      //redirect user if they're already signed in
+      // the design didn't have any Landing page so just redirect to dashboard or sign in
       redirect: () => {
         const authStore = useAuthStore();
 
