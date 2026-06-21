@@ -5,20 +5,27 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const model = defineModel();
 
-defineProps({
+const props = defineProps({
   placeholder: String,
   label: String,
-  type: {
-    type: String,
-    default: "text",
+  password: {
+    type: Boolean,
+    default: false,
   },
-  error: {
-    type: String,
-    default: "",
+  validator: {
+    type: Function,
+    default: null,
   },
 });
-
+const emit = defineEmits(["hasError"]);
+const error = ref("");
 const isPasswordShown = ref(false);
+
+const handleInput = () => {
+  if (!props.validator) return;
+  error.value = props.validator(model.value);
+  emit("hasError", error.value.length > 0);
+};
 </script>
 
 <template>
@@ -33,15 +40,14 @@ const isPasswordShown = ref(false);
       <div class="relative">
         <input
           v-model="model"
-          :type="
-            type === 'password' ? (isPasswordShown ? 'text' : 'password') : type
-          "
+          :type="password ? (isPasswordShown ? 'text' : 'password') : 'text'"
           :placeholder="placeholder"
+          @input="handleInput"
           class="input !rounded-[6px] w-full pr-12 px-4 py-[14px] font-roboto font-normal bg-gray-200 placeholder:text-[#808080] border border-gray-200"
           :class="error.length > 0 && '!input-error'"
         />
         <button
-          v-if="type === 'password'"
+          v-if="password"
           type="button"
           @click="isPasswordShown = !isPasswordShown"
           class="absolute right-2 top-1/2 -translate-y-1/2 btn-square btn-sm"
