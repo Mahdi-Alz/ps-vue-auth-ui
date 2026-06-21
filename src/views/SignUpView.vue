@@ -1,7 +1,7 @@
 <script setup>
 // import required
 import googleLogo from "@/assets/g-google-icon.svg";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
@@ -109,6 +109,10 @@ const validateConfirmPassword = (value) =>
 //   toast.success("Account created successfully!");
 //   router.push("/dashboard");
 // };
+const hasUppercase = computed(() => /[A-Z]/.test(password.value));
+const hasLowercase = computed(() => /[a-z]/.test(password.value));
+const hasNumber = computed(() => /\d/.test(password.value));
+const hasMinLength = computed(() => password.value.length >= 9);
 
 const handleSignup = () => {
   errorMessage.value = "";
@@ -182,6 +186,55 @@ const handleSignup = () => {
         :validator="isPasswordValid"
         @has-error="errors.password = $event"
       />
+      <div class="flex flex-col gap-1 px-4 -mt-1">
+        <label
+          class="flex items-center gap-2 font-roboto text-[11px] text-[#4D4D4D]"
+        >
+          <input
+            type="checkbox"
+            :checked="hasUppercase"
+            disabled
+            class="checkbox checkbox-xs"
+          />
+          At least one uppercase letter
+        </label>
+
+        <label
+          class="flex items-center gap-2 font-roboto text-[11px] text-[#4D4D4D]"
+        >
+          <input
+            type="checkbox"
+            :checked="hasLowercase"
+            disabled
+            class="checkbox checkbox-xs"
+          />
+          At least one lowercase letter
+        </label>
+
+        <label
+          class="flex items-center gap-2 font-roboto text-[11px] text-[#4D4D4D]"
+        >
+          <input
+            type="checkbox"
+            :checked="hasNumber"
+            disabled
+            class="checkbox checkbox-xs"
+          />
+          At least one number
+        </label>
+
+        <label
+          class="flex items-center gap-2 font-roboto text-[11px] text-[#4D4D4D]"
+        >
+          <input
+            type="checkbox"
+            :checked="hasMinLength"
+            disabled
+            class="checkbox checkbox-xs"
+          />
+          At least 9 characters
+        </label>
+      </div>
       <FormInput
         v-model="confirmPassword"
         placeholder="Confirm password"
