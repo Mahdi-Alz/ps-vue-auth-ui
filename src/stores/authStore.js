@@ -11,23 +11,15 @@ const default_user = {
 };
 
 export const useAuthStore = defineStore("auth", {
-  //state
   state: () => ({
-    /* --------- load users from local storage or set the default value --------- */
-    // 'users' is the database of our registered users
     users: JSON.parse(localStorage.getItem("users")) || [default_user],
-    // 'currentUser' is the user who is currently signed in
     currentUser: JSON.parse(localStorage.getItem("currentUser")) || null,
-    // 'isLoggedIn' is simply a boolean key
-    isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")) || false,
   }),
 
-  //getters
   getters: {
-    // Idk what is needed here
+    isLoggedIn: (state) => Boolean(state.currentUser),
   },
 
-  //actions
   actions: {
     /* --------------------------------- sign in -------------------------------- */
     signin(identifier, password) {
@@ -45,12 +37,10 @@ export const useAuthStore = defineStore("auth", {
         };
       }
 
-      // update the current user and login flag
+      // update the current user
       this.currentUser = user;
-      this.isLoggedIn = true;
-      // and store them in LocalStorage
+      // and store it in LocalStorage
       localStorage.setItem("currentUser", JSON.stringify(user));
-      localStorage.setItem("isLoggedIn", JSON.stringify(true));
       // return the final status
       return {
         success: true,
@@ -87,12 +77,10 @@ export const useAuthStore = defineStore("auth", {
       // we store them in LocalStorage
       localStorage.setItem("users", JSON.stringify(this.users));
 
-      // update the current user and login flag
+      // update the current user
       this.currentUser = newUser;
-      this.isLoggedIn = true;
-      // and store them in LocalStorage
+      // and store it in LocalStorage
       localStorage.setItem("currentUser", JSON.stringify(newUser));
-      localStorage.setItem("isLoggedIn", JSON.stringify(true));
       // return the final status
       return {
         success: true,
@@ -103,9 +91,8 @@ export const useAuthStore = defineStore("auth", {
     /* -------------------------------- sign out -------------------------------- */
     signout() {
       this.currentUser = null;
-      this.isLoggedIn = false;
       localStorage.removeItem("currentUser");
-      localStorage.setItem("isLoggedIn", JSON.stringify(false));
+      localStorage.removeItem("isLoggedIn");
     },
   },
 });
