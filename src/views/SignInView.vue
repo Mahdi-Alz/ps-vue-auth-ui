@@ -1,5 +1,6 @@
 <script setup>
 // import required
+import googleLogo from "@/assets/g-google-icon.svg";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
@@ -77,13 +78,23 @@ const handleSignin = () => {
     </div>
 
     <!-- Sign In button -->
-    <Button @click="handleSignin">Sign in</Button>
+    <Button
+      class="bg-[#007AFF] font-bold text-[15px] py-[10px] px-6 text-white"
+      @click="handleSignin"
+    >
+      Sign in
+    </Button>
 
     <!-- seprator line -->
     <hr />
 
     <!-- google button -->
-    <Button variant="google">Sign in with Google</Button>
+    <Button
+      :icon="googleLogo"
+      class="bg-[#333333] font-normal text-[12px] py-[10px] px-6 text-white"
+    >
+      Sign in with Google
+    </Button>
 
     <!-- redirect to sign up -->
     <p class="text-center font-roboto font-normal text-[12px]">

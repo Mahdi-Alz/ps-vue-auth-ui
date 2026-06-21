@@ -30,9 +30,12 @@ const handleSignout = () => {
           <p>Phone No.: {{ authStore.currentUser?.phone }}</p>
         </div>
       </div>
-      <Button variant="signout" class="w-full" @click="handleSignout"
-        >Sign out</Button
+      <Button
+        class="w-full bg-red-500 font-bold text-[15px] py-[10px] px-6 text-white"
+        @click="handleSignout"
       >
+        Sign out
+      </Button>
     </div>
   </div>
 </template>
