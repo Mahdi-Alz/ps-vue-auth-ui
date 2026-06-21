@@ -92,7 +92,6 @@ export const useAuthStore = defineStore("auth", {
     signout() {
       this.currentUser = null;
       localStorage.removeItem("currentUser");
-      localStorage.removeItem("isLoggedIn");
     },
   },
 });

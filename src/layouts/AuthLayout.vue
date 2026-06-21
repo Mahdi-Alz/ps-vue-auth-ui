@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <div class="md:flex m-auto min-h-screen max-w-[1440px] overflow-hidden">
+  <div class="container mx-auto min-h-screen overflow-hidden md:flex">
     <!-- left side -->
     <div class="hidden md:block md:w-1/2 lg:w-2/3 h-screen">
       <img
@@ -12,7 +12,7 @@
     </div>
     <!-- right side -->
     <div
-      class="auth-panel-scroll p-4 pt-6 md:pt-4 rounded-2xl max-w-[456px] min-w-[256px] h-screen mx-auto flex flex-col gap-6 md:w-1/2 lg:w-1/3 md:p-12 overflow-y-auto overscroll-contain"
+      class="auth-panel-scroll mx-auto flex h-screen w-full flex-col gap-6 rounded-2xl p-4 pt-6 overflow-y-auto overscroll-contain md:w-1/2 md:p-12 md:pt-4 lg:w-1/3"
     >
       <slot />
     </div>
