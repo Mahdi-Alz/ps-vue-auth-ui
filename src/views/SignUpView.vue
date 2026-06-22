@@ -69,7 +69,7 @@ const handleSignup = () => {
     return;
   }
   toast.success("Account created successfully!");
-  router.push("/dashboard");
+  router.push({ name: "dashboard" });
 };
 
 const hasUppercase = computed(() => /[A-Z]/.test(password.value));

@@ -38,7 +38,7 @@ const handleSignin = () => {
     return;
   }
   toast.success("Signed in successfully!");
-  router.push("/dashboard");
+  router.push({ name: "dashboard" });
 };
 </script>
 <template>
