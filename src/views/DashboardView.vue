@@ -1,13 +1,16 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import { storeToRefs } from "pinia";
 import Button from "@/components/Button.vue";
 
 const router = useRouter();
 const authStore = useAuthStore();
+const { currentUser } = storeToRefs(authStore);
+const { signout } = authStore;
 
 const handleSignout = () => {
-  authStore.signout();
+  signout();
   router.push("/signin");
 };
 </script>
@@ -25,9 +28,9 @@ const handleSignout = () => {
         class="card bg-gray-200 text-[#1A1A1A] w-full font-normal font-roboto"
       >
         <div class="card-body">
-          <h2 class="card-title">Name: {{ authStore.currentUser?.name }}</h2>
-          <p>Email: {{ authStore.currentUser?.email }}</p>
-          <p>Phone No.: {{ authStore.currentUser?.phone }}</p>
+          <h2 class="card-title">Name: {{ currentUser?.name }}</h2>
+          <p>Email: {{ currentUser?.email }}</p>
+          <p>Phone No.: {{ currentUser?.phone }}</p>
         </div>
       </div>
       <Button

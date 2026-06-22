@@ -1,10 +1,10 @@
 <script setup>
-// import required
 import googleLogo from "@/assets/icons/g-google-icon.svg";
 import { ref, computed } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
+import { storeToRefs } from "pinia";
 import {
   isNameValid,
   isEmailValid,
@@ -12,17 +12,17 @@ import {
   isPasswordValid,
 } from "@/utils/formValidation";
 
-// import components
 import Button from "@/components/Button.vue";
 import FormInput from "@/components/FormInput.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 
-// use imports
 const authStore = useAuthStore();
 const router = useRouter();
 const toast = useToast();
 
-// create refs for each form input model
+const { error } = storeToRefs(authStore);
+const { signup } = authStore;
+
 const name = ref("");
 const email = ref("");
 const phone = ref("");
@@ -55,17 +55,17 @@ const handleSignup = () => {
     toast.error("All fields are required");
     return;
   }
-  if (Object.values(errors.value).some((error) => error)) return;
+  if (Object.values(errors.value).some((hasError) => hasError)) return;
 
-  authStore.signup({
+  signup({
     name: name.value,
     email: email.value,
     phone: phone.value,
     password: password.value,
   });
-  if (authStore.error) {
-    errorMessage.value = authStore.error;
-    toast.error(authStore.error);
+  if (error.value) {
+    errorMessage.value = error.value;
+    toast.error(error.value);
     return;
   }
   toast.success("Account created successfully!");

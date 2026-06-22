@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
+import { storeToRefs } from "pinia";
 import { isIdentifierValid } from "@/utils/formValidation";
 
 import Button from "@/components/Button.vue";
@@ -13,6 +14,9 @@ import AuthLayout from "@/layouts/AuthLayout.vue";
 const authStore = useAuthStore();
 const router = useRouter();
 const toast = useToast();
+
+const { error } = storeToRefs(authStore);
+const { signin } = authStore;
 
 const identifier = ref("");
 const password = ref("");
@@ -31,10 +35,10 @@ const handleSignin = () => {
   }
   if (errors.value.identifier) return;
 
-  authStore.signin(identifier.value, password.value);
-  if (authStore.error) {
-    errorMessage.value = authStore.error;
-    toast.error(authStore.error);
+  signin(identifier.value, password.value);
+  if (error.value) {
+    errorMessage.value = error.value;
+    toast.error(error.value);
     return;
   }
   toast.success("Signed in successfully!");
