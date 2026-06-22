@@ -1,5 +1,4 @@
 <script setup>
-// import required
 import googleLogo from "@/assets/icons/g-google-icon.svg";
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/authStore";
@@ -23,10 +22,8 @@ const errors = ref({
 });
 
 const errorMessage = ref("");
-// Sign in button handler
 const handleSignin = () => {
   errorMessage.value = "";
-  // first check if fields are not empty
   if (!identifier.value.trim() || !password.value.trim()) {
     errorMessage.value = "All the fields are required";
     toast.error("All fields are required");
@@ -34,11 +31,10 @@ const handleSignin = () => {
   }
   if (errors.value.identifier) return;
 
-  // then we pass them to signin function in Pinia Store and get the result of sign in
-  const resultSignin = authStore.signin(identifier.value, password.value);
-  if (!resultSignin.success) {
-    errorMessage.value = resultSignin.message;
-    toast.error(resultSignin.message);
+  authStore.signin(identifier.value, password.value);
+  if (authStore.error) {
+    errorMessage.value = authStore.error;
+    toast.error(authStore.error);
     return;
   }
   toast.success("Signed in successfully!");
@@ -47,14 +43,12 @@ const handleSignin = () => {
 </script>
 <template>
   <AuthLayout>
-    <!-- title -->
     <h2
       class="text-[#1A1A1A] font-poppins font-semibold text-[20px] leading-[28px]"
     >
       Nice to see you again
     </h2>
 
-    <!-- form inputs -->
     <div class="flex flex-col gap-3 md:gap-4">
       <FormInput
         v-model="identifier"
@@ -84,7 +78,6 @@ const handleSignin = () => {
       </div>
     </div>
 
-    <!-- Sign In button -->
     <Button
       class="bg-[#007AFF] font-bold text-[15px] py-[10px] px-6 text-white"
       @click="handleSignin"
@@ -92,10 +85,8 @@ const handleSignin = () => {
       Sign in
     </Button>
 
-    <!-- seprator line -->
     <hr />
 
-    <!-- google button -->
     <Button
       :icon="googleLogo"
       class="bg-[#333333] font-normal text-[12px] py-[10px] px-6 text-white"
@@ -103,7 +94,6 @@ const handleSignin = () => {
       Sign in with Google
     </Button>
 
-    <!-- redirect to sign up -->
     <p class="text-center font-roboto font-normal text-[12px]">
       Don't have an account?
       <router-link to="/signup" class="text-[#007AFF] ml-2"

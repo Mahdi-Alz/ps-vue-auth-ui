@@ -42,81 +42,8 @@ const errorMessage = ref("");
 const validateConfirmPassword = (value) =>
   value === password.value ? "" : "Passwords do not match";
 
-// Sign up button handler
-// const handleSignup = () => {
-//   errorMessage.value = "";
-//   form.name.error = "";
-//   form.email.error = "";
-//   form.phone.error = "";
-//   form.password.error = "";
-//   form.confirmPassword.error = "";
-
-//   // first check if fields are not empty
-//   if (
-//     !form.name.value.trim() ||
-//     !form.email.value.trim() ||
-//     !form.phone.value.trim() ||
-//     !form.password.value.trim() ||
-//     !form.confirmPassword.value.trim()
-//   ) {
-//     errorMessage.value = "All fields are required";
-//     toast.error("All fields are required");
-//     return;
-//   }
-//   // check if passwords are the same
-//   if (form.password.value !== form.confirmPassword.value) {
-//     // errorMessage.value = "Passwords do not match";
-//     form.confirmPassword.error = "Passwords do not match";
-//   }
-
-//   //check if inputs are valid (using regex)
-//   if (!isNameValid(form.name.value)) {
-//     // errorMessage.value = "Invalid name";
-//     form.name.error = "Invalid Name";
-//   }
-
-//   if (!isEmailValid(form.email.value)) {
-//     // errorMessage.value = "Invalid email";
-//     form.email.error = "Invalid email";
-//   }
-
-//   if (!isPhoneValid(form.phone.value)) {
-//     // errorMessage.value = "Invalid phone number";
-//     form.phone.error = "Invalid Phone Number";
-//   }
-
-//   if (!isPasswordValid(form.password.value)) {
-//     // errorMessage.value = "Password must contain 9+ characters, uppercase, lowercase and number";
-//     form.password.error =
-//       "Must contain 9+ chars, uppercase, lowercase and number";
-//   }
-
-//   const hasErrors = Object.values(form).some((field) => field.error);
-
-//   if (hasErrors) return;
-//   // then we pass them as an Object to signup function in Pinia Store and get the result of sign up
-//   const resultSignup = authStore.signup({
-//     name: form.name.value,
-//     email: form.email.value,
-//     phone: form.phone.value,
-//     password: form.password.value,
-//   });
-//   if (!resultSignup.success) {
-//     errorMessage.value = resultSignup.message;
-//     toast.error(resultSignup.message);
-//     return;
-//   }
-//   toast.success("Account created successfully!");
-//   router.push("/dashboard");
-// };
-const hasUppercase = computed(() => /[A-Z]/.test(password.value));
-const hasLowercase = computed(() => /[a-z]/.test(password.value));
-const hasNumber = computed(() => /\d/.test(password.value));
-const hasMinLength = computed(() => password.value.length >= 9);
-
 const handleSignup = () => {
   errorMessage.value = "";
-
   if (
     !name.value.trim() ||
     !email.value.trim() ||
@@ -128,24 +55,27 @@ const handleSignup = () => {
     toast.error("All fields are required");
     return;
   }
+  if (Object.values(errors.value).some((error) => error)) return;
 
-  const hasErrors = Object.values(errors.value).some((error) => error);
-  if (hasErrors) return;
-
-  const resultSignup = authStore.signup({
+  authStore.signup({
     name: name.value,
     email: email.value,
     phone: phone.value,
     password: password.value,
   });
-  if (!resultSignup.success) {
-    errorMessage.value = resultSignup.message;
-    toast.error(resultSignup.message);
+  if (authStore.error) {
+    errorMessage.value = authStore.error;
+    toast.error(authStore.error);
     return;
   }
   toast.success("Account created successfully!");
   router.push("/dashboard");
 };
+
+const hasUppercase = computed(() => /[A-Z]/.test(password.value));
+const hasLowercase = computed(() => /[a-z]/.test(password.value));
+const hasNumber = computed(() => /\d/.test(password.value));
+const hasMinLength = computed(() => password.value.length >= 9);
 </script>
 
 <template>
@@ -274,7 +204,6 @@ const handleSignup = () => {
   </AuthLayout>
 </template>
 
-<!-- override to customize the toggle appearance -->
 <style scoped>
 [type="checkbox"].toggle-sm {
   --handleoffset: 1rem !important;
